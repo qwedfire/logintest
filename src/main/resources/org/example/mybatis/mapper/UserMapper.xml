@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mybatis.mapper.UserMapper">
+
+    <insert id="insertUser">
+        insert into users
+        values (null, "brad", "brad", "abcdefg")
+    </insert>
+    <!--    void updateUser();-->
+    <update id="updateUser">
+        update users
+        set username = 'BRAD'
+        where id = 2
+    </update>
+<!--    void deleteUser();-->
+    <delete id="deleteUser">
+        delete from users where id = 4
+    </delete>
+
+<!--    User getUserById();-->
+<!--    查詢功能的標籤必須設置ressultType或resultMap-->
+<!--    resultType: 設置默認的映射關係-->
+<!--    resultMap:設置自定義的映射關係-->
+
+    <select id="getUserById" resultType="User">
+        select * from users where id =1
+    </select>
+<!--    List<User> getAllUser();-->
+    <select id="getAllUser" resultType="User">
+        select * from users
+    </select>
+<!--    User getUserByName();-->
+    <select id="getUserByName" resultType="User">
+        select * from users where username = #{name}
+    </select>
+</mapper>

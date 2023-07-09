@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--
+        MyBatis核心配置文件中，標籤的順序:
+        (properties?,settings?,typeAliases?,typeHandlers?,
+        objectFactory?,objectWrapperFactory?,reflectorFactory?,plugins?,
+        environments?,databaseIdProvider?,mappers?)"
+        順序不對會抱錯
+    -->
+
+    <!--    引入properties文件-->
+    <properties resource="jdbc.properties"></properties>
+
+    <!--    設置類型別名-->
+    <typeAliases>
+        <!--
+            typeAlias設置某個類型的別名
+                屬性:
+                    type:設置需要設置別名的類型
+                    alias:設置某個類型的名，若不設置該屬性，那麼該類型擁有默認的別名，擊類明且不區分大小寫
+        -->
+        <!--<typeAlias type="org.example.mybatis.pojo.User" alias="User"></typeAlias>-->
+
+        <!--以包為單位，將包下所有的類型設置默認的類型別名，即類名且不區分大小寫-->
+        <package name="org.example.mybatis.pojo"/>
+    </typeAliases>
+    <!--
+        environments: 配置多個連接數據庫的環境
+        屬性:
+            default:設置默認使用的環境的id
+    -->
+    <environments default="development">
+        <!--
+            environment:配置某個具體的環境
+            屬性:
+                id:表示連接數據庫的環境的唯一標示，不能重複
+        -->
+        <environment id="development">
+            <!--
+                transactionManageer: 設置事務管理方式
+                屬性:
+                    type="JDBC|MANAGED"
+                    JDBC: 表示當前環境中，執行SQL時，使用的是JDBC中原生的事務管理方式，事務的提交或回滾需要手動處理
+                    MANAGED: 被管理，例如Spring
+            -->
+            <transactionManager type="JDBC"/>
+            <!--
+                dataSource: 配置數據源
+                屬性:
+                    type:設置數據源的類型
+                    type="POOLED|UNPOOLED|JNDI
+                    POOLED: 表示使用數據庫連接持緩衝數據庫連接
+                    UNPOOLED: 表示不使用數據庫連接池
+                    JNDI: 表示使用上下文中的數據源
+            -->
+            <dataSource type="POOLED">
+                <!--設置連接數據庫的驅動-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <!--設置連接數據庫的連接地址-->
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--    引入映射文件-->
+    <mappers>
+        <!--        <mapper resource="mappers/UserMapper.xml"/>-->
+        <!--
+            以包為單位引入映射文件
+            要求:
+            1.mapper接口所在的包要和映射文件所在的包一致
+            2.mapper接口要和映射文件的名字一致
+        -->
+        <package name="org.example.mybatis.mapper"/>
+    </mappers>
+</configuration>
